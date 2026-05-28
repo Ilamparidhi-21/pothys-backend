@@ -1,0 +1,38 @@
+# Dependencies
+node_modules
+pnpm-lock.yaml
+package-lock.json
+
+# Build outputs
+dist
+build
+*.tsbuildinfo
+
+# Environment files
+.env*
+
+# Logs
+*.log
+logs
+
+# Coverage
+coverage
+
+# Generated files
+*.d.ts
+
+# Docker
+Dockerfile*
+
+# Cache
+.cache
+.temp
+.tmp
+.eslintcache
+
+# Git
+.git
+
+# IDE
+.vscode
+.idea
