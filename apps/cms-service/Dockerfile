@@ -1,36 +1,20 @@
+
 # --- Base stage ---
 FROM node:22.18.0-alpine AS base
 WORKDIR /app
 RUN npm install -g pnpm
 
-# Copy workspace files
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
 
-# Copy code
 COPY libs ./libs
-COPY microservices/compliance-service ./microservices/compliance-service
-
-# Install deps
-# RUN pnpm install --frozen-lockfile
+COPY apps/cms-service ./apps/cms-service
 
 RUN pnpm install
-# Build all local libraries before installing dependencies
 RUN pnpm --filter ./libs run build:all
-
-
-# --- Dev stage ---
-FROM base AS dev
-WORKDIR /app/microservices/compliance-service
-
-# Install nodemon for reload
-RUN pnpm add -D nodemon
-
-# Start TypeScript watch + nodemon
-CMD sh -c "pnpm run start:dev"
 
 # --- Build stage ---
 FROM base AS build
-WORKDIR /app/microservices/compliance-service
+WORKDIR /app/apps/cms-service
 RUN pnpm run build
 
 # --- Production stage ---
@@ -42,9 +26,8 @@ COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/package.json ./
 COPY --from=base /app/pnpm-lock.yaml ./
 
-# Copy built dist of all libraries for @asb/* packages
 COPY --from=build /app/libs ./libs
-COPY --from=build /app/microservices/compliance-service/dist ./dist
+COPY --from=build /app/apps/cms-service/dist ./dist
 
 EXPOSE 3001
 CMD ["node", "dist/main.js"]
