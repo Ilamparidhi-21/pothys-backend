@@ -8,7 +8,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
 COPY libs ./libs
 COPY apps/cms-service ./apps/cms-service
 
-RUN pnpm install --frozen-lockfile --ignore-scripts
+RUN pnpm install --no-frozen-lockfile --ignore-scripts
 
 # --- Build stage ---
 FROM deps AS build
@@ -27,7 +27,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
 COPY libs ./libs
 COPY apps/cms-service/package.json ./apps/cms-service/package.json
 
-RUN pnpm install --prod --frozen-lockfile --ignore-scripts
+RUN pnpm install --prod --no-frozen-lockfile --ignore-scripts
 
 # --- Production stage ---
 FROM node:22.18.0-alpine AS production
