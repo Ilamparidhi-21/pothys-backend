@@ -3,30 +3,25 @@ kind: Deployment
 metadata:
   name: cms-service
   namespace: staging
-
 spec:
   replicas: 1
-
   selector:
     matchLabels:
       app: cms-service
-
   template:
     metadata:
       labels:
         app: cms-service
-
     spec:
       containers:
         - name: cms-service
-
           image: 445363793940.dkr.ecr.ap-south-1.amazonaws.com/cms-service:latest
-
           imagePullPolicy: Always
-
           ports:
-            - containerPort: 3002
-
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: cms-service-secret
           resources:
             requests:
               cpu: "50m"
@@ -34,7 +29,3 @@ spec:
             limits:
               cpu: "250m"
               memory: "256Mi"
-
-          envFrom:
-            - secretRef:
-                name: cms-service-secret
