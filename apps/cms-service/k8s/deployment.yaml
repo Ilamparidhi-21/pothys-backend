@@ -18,7 +18,7 @@ spec:
           image: 445363793940.dkr.ecr.ap-south-1.amazonaws.com/cms-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 3002
           envFrom:
             - secretRef:
                 name: cms-service-secret
