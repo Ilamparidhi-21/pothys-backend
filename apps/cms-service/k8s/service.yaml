@@ -10,5 +10,5 @@ spec:
     app: cms-service
   ports:
     - port: 80
-      targetPort: 3000
+      targetPort: 3002
       nodePort: 32082
