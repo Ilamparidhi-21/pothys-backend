@@ -3,11 +3,8 @@
     // Use CommonJS-compatible Node16 module kind
     "module": "Node16",
     "moduleResolution": "node16",
-
-    // Enable modern exports resolution from package.json
-    "resolvePackageJsonExports": true,
-
-    // Compatibility
+    
+    // Comatibility
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
